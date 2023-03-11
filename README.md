@@ -2,7 +2,7 @@
 # Ilkin Isgenderli
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.6.
-another branch
+another branch AND merge them
 
 ## Development server
 
