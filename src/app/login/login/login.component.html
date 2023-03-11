@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7 mt-5">
+            <div class="">
+                <img src="https://www.shutterstock.com/image-vector/man-key-near-computer-account-600w-1499141258.jpg" alt="">
+            </div>
+        </div>
+       
+        <div class="col-lg-5 mt-auto mb-5">
+
+
+            <div class="card text-center w-75 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">SignIn</h5>
+                    <form [formGroup]="loginForm" (submit)="onSubmit()">
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Email address</label>
+                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email">
+                          <div id="emailHelp" class="form-text" *ngIf="!loginForm.get('email')?.valid && loginForm.get('email')!.touched">Enter email</div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label">Password</label>
+                          <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
+                          <div id="emailHelp" class="form-text" *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')!.touched">Enter password</div>
+                        </div>
+                    
+                        <button type="submit" class="btn  btn-outline-primary btn-lg btn float-end" [disabled]="!loginForm.valid">Submit</button>
+                      </form>
+                </div>
+               
+              </div>
+
+        </div>
+    </div>
+</div>
