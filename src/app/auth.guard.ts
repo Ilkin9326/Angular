@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -13,12 +13,21 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('nedi login: ', this.userAuth.isUserAuthenticated())
-    if(!this.userAuth.isUserAuthenticated()){
+    this.userAuth.userActivated.pipe(
+      map((isLoggedIn) =>{
+        return isLoggedIn;
+      }),
+      catchError((err) =>{
+        this.route.navigate(['/login']);
+        return of(false);
+      })
+    )
+
+    /*if(!this.userAuth.isUserAuthenticated()){
+      console.log('guardmi')
       this.route.navigate(['/login'])
       return false;
-    }
-
+    }*/
     return true;
   }
   

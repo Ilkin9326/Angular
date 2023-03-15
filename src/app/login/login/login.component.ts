@@ -34,22 +34,6 @@ export class LoginComponent implements OnInit{
 
   onSubmit(){
     this.authService.postLogin(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value);
-    //this.authService.userActivated.subscribe((res)=>this.data=res);
-    console.log(this.data);
-      /*this.http.get<any>(url);
-      // the response is correct but not set the cookies
-      this.http.post<any>('http://127.0.0.1:8000/api/v1/login', data, {withCredentials: true}).subscribe({
-        next: (res) => {
-          localStorage.setItem('token', res.data);
-          this.toastr.success('Ugurlu login', 'Success operations');
-          //this.route.navigate(['/user_list']);        
-        },
-
-        error: (res) => console.log('bura errr: '+res)
-      })*/
-
-
-       
   }
 
 }

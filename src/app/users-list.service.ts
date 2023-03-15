@@ -21,6 +21,6 @@ export class UsersListService {
   user:User[] = [];
 
   getUserList():Observable<User[]>{
-    return this.http.get<User[]>('http://localhost:8000/api/user', requestOptions);
+    return this.http.get<User[]>('http://localhost:8000/api/v1/auth/user', requestOptions);
   }
 }

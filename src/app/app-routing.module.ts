@@ -8,11 +8,11 @@ import { UserSignupComponent } from './user-signup/user-signup.component';
 import { UserListComponent } from './UserList/user-list/user-list.component';
 
 const routes: Routes = [ 
-{path: '', component: HomeComponent, canActivate: [AuthGuard]},
+{path: '', component: HomeComponent},
 {path: 'login', component: LoginComponent},
-{path: 'user_list', component: UserListComponent},
+{path: 'user_list', component: UserListComponent, canActivate: [AuthGuard]},
 {path: 'user_signup', component: UserSignupComponent},
-{ path: '**', redirectTo: "/" }
+{ path: '**', component: NotFoundComponentComponent/*redirectTo: "/"*/ }
 
 ];
 

@@ -10,13 +10,15 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent implements OnInit{
   
-  constructor(private service: AuthService, private route: Router){}
-
   title = 'Basic Login Auth';
   isLoggedIn:boolean = false;
+
+  constructor(private service: AuthService, private route: Router){
+    this.service.userActivated.subscribe(res=> this.isLoggedIn=res)
+  }
   
   ngOnInit(): void {
-    this.service.userActivated.subscribe(res=> this.isLoggedIn = res)
+    this.service.checkLogin().subscribe((res)=> this.isLoggedIn=true)
   }
 
   logOutEle(){
@@ -24,12 +26,15 @@ export class AppComponent implements OnInit{
       next:(res)=>{
         if(res.status == 'Request was successful' && res.data == 'Log out edildi'){
           this.route.navigate(['login'])
+           window.location.reload();
         }
       },
       error: (err: HttpErrorResponse) =>{
         console.log('error ')
       }
     });
+
+   
   }
 
 }

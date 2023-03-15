@@ -28,10 +28,7 @@ export class UserListComponent implements OnInit {
     this.service.getUserList().subscribe({
       next: (res:any)=> this.user = res['data'],
       error: (res:HttpErrorResponse) => {
-        if(res.error.message == 'Unauthenticated.' && res.status==401){
-          this.toastr.error('Unauthorized','Xəta baş verdi');
-          this.route.navigate(['login']);
-        }
+        console.log(res)
       }
     });
   }
