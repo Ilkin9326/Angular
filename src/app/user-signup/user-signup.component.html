@@ -1,0 +1,31 @@
+<div class="conatiner">
+    <div class="row justify-content-center">
+        <div class="col-4">
+        <div class="card text-center w-75 shadow-sm my-5">
+            <div class="card-body">
+                <h5 class="card-title text-primary">User Sign Up</h5>
+                <form [formGroup]="signupForm" (submit)="onSubmit()">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" aria-describedby="nameHelp" formControlName="name">
+                       <div id="nameHelp" class="form-text text-danger" *ngIf="!signupForm.get('name')?.valid && signupForm.get('name')!.touched">Enter name</div>
+                      </div>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Email address</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="email">
+                      <div id="emailHelp" class="form-text text-danger" *ngIf="!signupForm.get('email')?.valid && signupForm.get('email')!.touched">Enter email</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="exampleInputPassword1" formControlName="password">
+                      <div id="emailHelp" class="form-text text-danger" *ngIf="!signupForm.get('password')?.valid && signupForm.get('password')!.touched">Enter password</div>
+                    </div>
+                    <div class="d-grid gap-2 col-8 mx-auto"><button type="submit" class="btn btn-outline-primary float-end" [disabled]="!signupForm.valid">Submit</button></div>
+                    
+                  </form>
+            </div>
+           
+          </div>
+        </div>
+    </div>
+</div>

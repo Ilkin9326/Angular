@@ -14,13 +14,17 @@ import { HttpXsrfInterceptor } from './http-xsrf.interceptor';
 import { HttpRequestInterceptor } from './http-request.interceptor';
 import { AuthGuard } from './auth.guard';
 import { NotFoundComponentComponent } from './not-found-component/not-found-component.component';
+import { HomeComponent } from './home/home.component';
+import { UserSignupComponent } from './user-signup/user-signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserListComponent,
-    NotFoundComponentComponent
+    NotFoundComponentComponent,
+    HomeComponent,
+    UserSignupComponent
   ],
   imports: [
     BrowserModule,

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit{
 
   onSubmit(){
     this.authService.postLogin(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value);
-    this.authService.subject.subscribe((res)=>this.data=res);
+    //this.authService.userActivated.subscribe((res)=>this.data=res);
     console.log(this.data);
       /*this.http.get<any>(url);
       // the response is correct but not set the cookies

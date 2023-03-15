@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    console.log('nedi login ', this.userAuth.isUserAuthenticated())
+    console.log('nedi login: ', this.userAuth.isUserAuthenticated())
     if(!this.userAuth.isUserAuthenticated()){
       this.route.navigate(['/login'])
       return false;

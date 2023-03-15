@@ -1,6 +1,7 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/user';
 import { UsersListService } from 'src/app/users-list.service';
 
@@ -11,17 +12,28 @@ import { UsersListService } from 'src/app/users-list.service';
 })
 export class UserListComponent implements OnInit {
 
-  constructor(private service: UsersListService, private route: Router){}
+  constructor(private service: UsersListService,
+     private route: Router,
+     private router: ActivatedRoute,
+     private toastr: ToastrService){}
   
 
   user: User[] = [];
 
   ngOnInit() { 
-    this.service.getUserList().subscribe((data:any)=> this.user = data['data']);
-    
-    if(this.user == null){
-      this.route.navigate(['login']);
-    }
-  } 
+    this.getUserList();
+  }
+
+  getUserList(){
+    this.service.getUserList().subscribe({
+      next: (res:any)=> this.user = res['data'],
+      error: (res:HttpErrorResponse) => {
+        if(res.error.message == 'Unauthenticated.' && res.status==401){
+          this.toastr.error('Unauthorized','Xəta baş verdi');
+          this.route.navigate(['login']);
+        }
+      }
+    });
+  }
 
 }
