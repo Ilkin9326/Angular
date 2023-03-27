@@ -16,6 +16,7 @@ import { AuthGuard } from './auth.guard';
 import { NotFoundComponentComponent } from './not-found-component/not-found-component.component';
 import { HomeComponent } from './home/home.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UserSignupComponent } from './user-signup/user-signup.component';
     UserListComponent,
     NotFoundComponentComponent,
     HomeComponent,
-    UserSignupComponent
+    UserSignupComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
