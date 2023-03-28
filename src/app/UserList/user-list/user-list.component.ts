@@ -15,7 +15,10 @@ export class UserListComponent implements OnInit {
   constructor(private service: UsersListService,
      private route: Router,
      private router: ActivatedRoute,
-     private toastr: ToastrService){}
+     private toastr: ToastrService){
+
+      
+     }
   
 
   user: User[] = [];

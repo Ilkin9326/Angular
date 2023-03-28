@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map, Observable, of, Subject, switchMap } from 'rxjs';
+import { AppConfig } from 'src/config/app-config';
 
 
 const httpOptions = {
@@ -18,7 +19,7 @@ export class AuthService {
   userActivated = new BehaviorSubject(false);
   isLoggedIn:boolean = false; 
 
-  constructor(private http: HttpClient, private route: Router, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private route: Router, private toastr: ToastrService, private config: AppConfig) {
       this.checkLogin().subscribe((res)=> {
         this.isLoggedIn=true;
         this.userActivated.next(true);
@@ -35,7 +36,7 @@ export class AuthService {
 
     this.http.get(url)
         .pipe(
-            switchMap((result:any) => this.http.post('http://localhost:8000/api/v1/auth/login', data, httpOptions))
+            switchMap((result:any) => this.http.post(this.config.baseUrl+'auth/login', data, httpOptions))
         ).subscribe({
           next: (res:any)=> {
             
@@ -45,7 +46,7 @@ export class AuthService {
               this.route.navigate(['user_list']);
             }
           },
-          error: (res)=> { this.toastr.error(res.error.message, 'Unexpected error') }
+          error: (res:HttpErrorResponse)=> { this.loginErroHandle(res) }
     })
   }
 
@@ -62,32 +63,27 @@ export class AuthService {
 
     return this.http.get(url)
     .pipe(
-        switchMap((result:any) => this.http.post('http://localhost:8000/api/v1/auth/signup', data, httpOptions))
+        switchMap((result:any) => this.http.post(this.config.baseUrl+'auth/signup', data, httpOptions))
     );
   }
 
   //user logout
   logOut():Observable<any>{
     this.isLoggedIn = false;
-    return this.http.post('http://localhost:8000/api/v1/auth/logOut', httpOptions);
+    return this.http.post(this.config.baseUrl+'auth/logOut', httpOptions);
   }
 
   isUserAuthenticated():boolean{
-
     return this.isLoggedIn;
-    /*let message:string = "";
-    
-    this.logOut().pipe(
-      map((res) => {
-        message=res.data
-        this.isLoggedIn=false
-      })
-    ).subscribe(res=> console.log('ne var:', res))
-    return of(message);*/
   }
 
   checkLogin(): Observable<any>{
-    return this.http.get('http://localhost:8000/api/v1/auth/checkLogin');
+    return this.http.get(this.config.baseUrl+'auth/checkLogin');
   }
+
+  loginErroHandle(error:HttpErrorResponse){
+    this.toastr.error(error.error.message, 'Unexpected error')
+  }
+
 
 }

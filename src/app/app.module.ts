@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoginComponent } from './login/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
 import { UserListComponent } from './UserList/user-list/user-list.component';
 import { HttpErrorHandlerInterceptorServiceInterceptor } from './http-error-handler-interceptor-service.interceptor';
 import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
@@ -17,6 +17,14 @@ import { NotFoundComponentComponent } from './not-found-component/not-found-comp
 import { HomeComponent } from './home/home.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { FooterComponent } from './footer/footer.component';
+import { JsonAppConfigService } from 'src/config/json-app-config.service';
+import { AppConfig } from 'src/config/app-config';
+
+export function initializerFn(jsonAppConfServ: JsonAppConfigService){
+  return ()=>{
+    return jsonAppConfServ.load();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -43,7 +51,18 @@ import { FooterComponent } from './footer/footer.component';
       AuthGuard,
       /*{provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandlerInterceptorServiceInterceptor, multi:true},*/
       {provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi:true},
-      { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
+      { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+      {
+        provide: AppConfig,
+        deps: [HttpClient],
+        useExisting: JsonAppConfigService
+      },
+      {
+        provide: APP_INITIALIZER,
+        multi: true,
+        deps: [JsonAppConfigService],
+        useFactory: initializerFn
+      }
 
   ],
   bootstrap: [AppComponent]
